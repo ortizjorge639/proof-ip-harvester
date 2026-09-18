@@ -1,0 +1,39 @@
+{
+  "candidateInbox": "raw/reusable-ip-candidates",
+  "promotionTargets": {
+    "responses": "responses",
+    "concepts": "wiki/concepts",
+    "architectures": "wiki/architectures",
+    "outputs": "wiki/outputs"
+  },
+  "connectors": {
+    "workIq": {
+      "enabled": true,
+      "purpose": "Cross-service enrichment and validation"
+    },
+    "teams": {
+      "enabled": true,
+      "includeChats": true,
+      "includeChannels": true
+    },
+    "outlook": {
+      "enabled": true,
+      "includeEmail": true,
+      "includeCalendar": true
+    },
+    "files": {
+      "enabled": true,
+      "providers": ["OneDrive", "SharePoint"]
+    },
+    "notification": {
+      "enabled": true,
+      "channel": "Teams"
+    }
+  },
+  "scanPolicy": {
+    "window": "current-week",
+    "writeOnlyHighSignalCandidates": true,
+    "requireEvidenceLevel": true,
+    "requireHumanApprovalBeforePromotion": true
+  }
+}
