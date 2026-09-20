@@ -145,11 +145,15 @@ The harvester should keep evidence pointers local, write candidate notes as draf
 
 ## Repository contents
 
+For the demo story, timed beats, narration draft, and production requirements, see [Hackathon demo video](docs/hackathon-video.md).
+
 ```text
 proof-ip-harvester/
   README.md
   SKILL.md
   config.example.json
+  docs/
+    hackathon-video.md
   connectors/
     README.md
     scout.md
@@ -163,4 +167,3 @@ proof-ip-harvester/
     promotion-checklist.md
     weekly-handoff.md
 ```
-
