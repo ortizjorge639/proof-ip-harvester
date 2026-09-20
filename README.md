@@ -147,6 +147,8 @@ The harvester should keep evidence pointers local, write candidate notes as draf
 
 For the demo story, timed beats, narration draft, and production requirements, see [Hackathon demo video](docs/hackathon-video.md).
 
+The [90-second HTML storyboard](docs/slides/index.html) opens locally without dependencies. It includes playback controls, seven demo beats, and draft speaker notes. Public examples are labeled illustrative; private captures and narration are not bundled.
+
 ```text
 proof-ip-harvester/
   README.md
@@ -154,6 +156,8 @@ proof-ip-harvester/
   config.example.json
   docs/
     hackathon-video.md
+    slides/
+      index.html
   connectors/
     README.md
     scout.md

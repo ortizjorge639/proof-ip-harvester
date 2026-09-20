@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof &amp; IP Harvester | Harvest the work you already did</title>
+<script>
+(() => {
+  const param = new URLSearchParams(window.location.search).get("scoutTheme");
+  const theme = param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  document.documentElement.setAttribute("data-theme", theme);
+})();
+</script>
+<style>
+@font-face { font-family:"Segoe UI"; src:local("Segoe UI"); font-weight:400; }
+@font-face { font-family:"Segoe UI"; src:local("Segoe UI Semibold"); font-weight:600 700; }
+@font-face { font-family:Consolas; src:local("Consolas"); }
+:root {
+  color-scheme: light;
+  --cp-bg: #f7f4ef;
+  --cp-bg-elevated: #fcfbf8;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #f5f5f5;
+  --cp-border: #dedede;
+  --cp-border-strong: #919191;
+  --cp-text: #242424;
+  --cp-text-muted: #5c5c5c;
+  --cp-text-soft: #6f6f6f;
+  --cp-accent: #b11f4b;
+  --cp-accent-hover: #9a1a41;
+  --cp-accent-soft: rgba(177, 31, 75, 0.08);
+  --cp-accent-fg: #ffffff;
+  --cp-success: #16a34a;
+  --cp-danger: #dc2626;
+  --cp-warning: #f59e0b;
+  --cp-link: #0078d4;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+  --cp-overlay: rgba(255, 255, 255, 0.8);
+  --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.55);
+  --cp-highlight: rgba(177, 31, 75, 0.12);
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #3d3b3a;
+  --cp-bg-elevated: #343231;
+  --cp-surface: #292929;
+  --cp-surface-soft: #2e2e2e;
+  --cp-border: #474747;
+  --cp-border-strong: #5f5f5f;
+  --cp-text: #dedede;
+  --cp-text-muted: #919191;
+  --cp-text-soft: #b0b0b0;
+  --cp-accent: #fd8ea1;
+  --cp-accent-hover: #fb7b91;
+  --cp-accent-soft: rgba(253, 142, 161, 0.14);
+  --cp-accent-fg: #1a1a1a;
+  --cp-success: #4ade80;
+  --cp-danger: #f87171;
+  --cp-warning: #fbbf24;
+  --cp-link: #4da6ff;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --cp-overlay: rgba(41, 41, 41, 0.88);
+  --cp-panel: rgba(41, 41, 41, 0.72);
+  --cp-panel-strong: rgba(41, 41, 41, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.04);
+  --cp-highlight: rgba(253, 142, 161, 0.12);
+}
+* { box-sizing: border-box; }
+body { margin:0; background:var(--cp-bg); color:var(--cp-text); font-family:"Segoe UI",sans-serif; }
+#harvest { position:relative; width:1920px; height:1080px; overflow:hidden; background:var(--cp-bg); }
+.mast { position:absolute; left:96px; right:96px; top:46px; display:flex; justify-content:space-between; align-items:center; font-size:23px; letter-spacing:2px; text-transform:uppercase; z-index:5; }
+.brand { display:flex; gap:16px; align-items:center; font-weight:700; }
+.mark { width:28px; height:36px; background:var(--cp-accent); border-radius:28px 0 28px 0; transform:rotate(22deg); }
+.season { font-size:19px; color:var(--cp-text-muted); letter-spacing:4px; }
+.scene { position:absolute; inset:112px 96px 152px; opacity:0; visibility:hidden; }
+.scene[aria-hidden="false"] { visibility:visible; }
+.eyebrow { font-size:22px; letter-spacing:4px; text-transform:uppercase; color:var(--cp-accent); font-weight:700; margin-bottom:28px; }
+h1 { font-size:112px; line-height:1.02; letter-spacing:-6px; font-weight:650; margin:0; }
+h2 { font-size:80px; line-height:1.05; letter-spacing:-4px; font-weight:650; margin:0 0 28px; }
+h3 { font-size:34px; margin:0 0 20px; }
+p { font-size:30px; line-height:1.45; margin:0 0 22px; }
+.muted { color:var(--cp-text-muted); }
+.accent { color:var(--cp-accent); }
+.small { font-size:21px; line-height:1.5; }
+.mono { font-family:Consolas,monospace; }
+.split { display:grid; grid-template-columns: 1fr 1fr; gap:68px; height:100%; align-items:center; }
+.paper { background:var(--cp-surface); border:1px solid var(--cp-border); border-radius:16px; padding:36px; }
+.pill { display:inline-block; font-size:19px; letter-spacing:1px; padding:10px 18px; border:1px solid var(--cp-border-strong); border-radius:10px; margin-bottom:20px; }
+.pill.rose { color:var(--cp-accent); background:var(--cp-accent-soft); border-color:var(--cp-accent); }
+.art { position:relative; height:700px; perspective:1200px; }
+.orbit { position:absolute; inset:70px 0 20px; border:1px solid var(--cp-border); border-radius:50%; transform:rotateX(35deg) rotateZ(-20deg); }
+.orbit.two { inset:150px 80px 100px; }
+.seed { position:absolute; width:265px; height:140px; padding:25px; background:var(--cp-surface); border:1px solid var(--cp-border); border-radius:16px; box-shadow:var(--cp-shadow); font-size:24px; }
+.seed span { display:block; margin-bottom:12px; color:var(--cp-accent); font-size:17px; letter-spacing:2px; text-transform:uppercase; }
+.seed.a { left:50px; top:50px; transform:rotate(-9deg); }
+.seed.b { right:0; top:110px; transform:rotate(9deg); }
+.seed.c { left:0; top:360px; transform:rotate(-6deg); }
+.seed.d { right:0; top:470px; transform:rotate(7deg); }
+.harvest-icon { position:absolute; left:285px; top:300px; width:190px; height:190px; border-radius:55px 0 55px 0; background:var(--cp-accent); color:var(--cp-accent-fg); display:grid; place-items:center; font-size:88px; transform:rotate(-8deg); }
+.leaf { position:absolute; width:24px; height:42px; border-radius:30px 0 30px 0; background:var(--cp-accent); opacity:.18; }
+.lanes { display:grid; grid-template-columns:1fr 1fr; gap:32px; margin-top:36px; }
+.lane { border-top:5px solid var(--cp-accent); padding:32px; background:var(--cp-surface); border-radius:0 0 16px 16px; }
+.lane h3 { font-size:40px; }
+.flow { display:flex; gap:12px; align-items:center; margin-top:30px; }
+.flow span { font-size:22px; padding:14px 18px; border:1px solid var(--cp-border); background:var(--cp-surface); border-radius:10px; }
+.flow b { color:var(--cp-accent); font-size:26px; }
+.source-label { font-size:19px; color:var(--cp-text-muted); text-transform:uppercase; letter-spacing:2px; margin-bottom:16px; }
+.capture { height:685px; width:684px; object-fit:contain; display:block; border:1px solid var(--cp-border); border-radius:10px; }
+.note-copy { max-width:820px; }
+.quote { font-size:45px; line-height:1.25; padding-left:28px; border-left:5px solid var(--cp-accent); }
+.route { font-size:21px; overflow-wrap:anywhere; background:var(--cp-surface-soft); padding:18px; border-radius:10px; line-height:1.5; }
+.gate-grid { display:grid; grid-template-columns:1fr 1.15fr 1fr; gap:28px; margin-top:50px; align-items:stretch; }
+.gate { background:var(--cp-accent); color:var(--cp-accent-fg); padding:40px; border-radius:16px; }
+.gate .big { font-size:55px; line-height:1.1; margin:28px 0; font-weight:650; }
+.step { font-size:20px; letter-spacing:3px; margin-bottom:30px; }
+.hand { padding:28px 36px; }
+.hand .row { padding:16px 0; border-top:1px solid var(--cp-border); }
+.hand h3 { font-size:28px; margin-bottom:12px; }
+.hand p { font-size:23px; line-height:1.35; }
+.hand p.small { font-size:20px; margin-bottom:0; }
+.stamp { font-size:20px; letter-spacing:2px; color:var(--cp-accent); margin-bottom:24px; }
+.reply { padding:18px; border:1px solid var(--cp-accent); border-radius:10px; color:var(--cp-accent); font-size:22px; }
+.benefits { display:grid; grid-template-columns:1fr 1fr; gap:30px; margin:32px 0; }
+.benefits p { font-size:24px; }
+.repo { font-size:26px; color:var(--cp-accent); border-bottom:2px solid var(--cp-accent); display:inline-block; padding-bottom:10px; margin-top:24px; }
+.footer { position:absolute; bottom:36px; left:96px; right:96px; z-index:5; }
+.caption { font-size:29px; border-top:1px solid var(--cp-border-strong); padding-top:20px; height:67px; }
+.progress { height:4px; background:var(--cp-accent); transform-origin:left; margin-top:10px; }
+.footer-meta { display:flex; justify-content:space-between; font-size:16px; letter-spacing:2px; text-transform:uppercase; margin-top:12px; color:var(--cp-text-muted); }
+#controls { display:flex; flex-wrap:wrap; gap:14px; align-items:center; padding:20px; max-width:1200px; margin:auto; }
+button { font:inherit; border:1px solid var(--cp-border-strong); background:var(--cp-surface); color:var(--cp-text); border-radius:10px; padding:12px 20px; cursor:pointer; }
+input[type=range] { flex:1; accent-color:var(--cp-accent); }
+body.render #controls, body.render #production { display:none; }
+#production { max-width:1160px; margin:0 auto 40px; padding:24px; border:1px solid var(--cp-border); border-radius:16px; background:var(--cp-surface); }
+#production p { font-size:18px; }
+#production h3 { font-size:24px; }
+a { color:var(--cp-link); }
+.sample-note { border-left:5px solid var(--cp-accent); }
+.sample-note p,.sample-note li { font-size:25px; line-height:1.4; }
+.sample-note ol { padding-left:30px; }
+.sample-note h3 { font-size:31px; }
+.file-list { list-style:none; padding:0; margin:0; }
+.file-list li { padding:17px 0; border-bottom:1px solid var(--cp-border); font-size:26px; }
+.file-list small { display:block; font-family:"Segoe UI",sans-serif; font-size:21px; color:var(--cp-text-muted); margin-top:8px; }
+.recording-slot { font-size:20px; padding:14px 18px; border:1px dashed var(--cp-border-strong); border-radius:10px; }
+button:focus-visible,a:focus-visible,input:focus-visible { outline:3px solid var(--cp-accent); outline-offset:3px; }
+@media (prefers-reduced-motion: reduce) { .leaf { display:none; } }
+</style>
+</head>
+<body>
+<div id="harvest" data-width="1920" data-height="1080" data-duration="90">
+  <header class="mast"><div class="brand"><i class="mark"></i>Proof &amp; IP Harvester</div><div class="season">Fall 2026 / a season for reuse</div></header>
+  <section id="s1" class="scene" data-start="0" data-duration="8" aria-label="The lost value">
+    <div class="split">
+      <div><div class="eyebrow">Your week is full of good work.</div><h1>Don't let<br>the useful<br>bits <span class="accent">fall away.</span></h1><p class="muted" style="margin-top:36px">Harvest the work you already did.</p><span class="pill">Customer Proof + Repeatable IP</span></div>
+      <div class="art" aria-label="Illustration of work fragments gathering around a leaf">
+        <div class="orbit"></div><div class="orbit two"></div>
+        <div class="seed a"><span>A conversation</span>A useful explanation</div>
+        <div class="seed b"><span>A deliverable</span>A reusable diagram</div>
+        <div class="seed c"><span>A decision</span>An evidenced outcome</div>
+        <div class="seed d"><span>A response</span>A better starting point</div>
+        <div class="harvest-icon"><span>&#10003;</span></div>
+      </div>
+    </div>
+  </section>
+  <section id="s2" class="scene" data-start="8" data-duration="12" aria-label="Two lanes">
+    <div class="eyebrow">Workflow concept / connector-enabled host required</div><h2>One harvest.<br><span class="accent">Two kinds of value.</span></h2>
+    <div class="flow"><span>Teams + Outlook</span><b>+</b><span>Calendar + work files</span><b>&rarr;</b><span>WorkIQ enrichment</span><b>&rarr;</b><span>Review inbox</span></div>
+    <div class="lanes">
+      <div class="lane"><div class="pill rose">CP</div><h3>Customer Proof</h3><p>What changed for the customer?</p><p class="muted">An outcome. A decision. A supported impact statement.</p></div>
+      <div class="lane"><div class="pill rose">RI</div><h3>Repeatable IP</h3><p>What can someone else use?</p><p class="muted">An explanation. A diagram. A playbook. A starting point.</p></div>
+    </div>
+  </section>
+  <section id="s3" class="scene" data-start="20" data-duration="17" aria-label="Sharing plan and draft copy">
+    <div class="split" style="grid-template-columns:1.15fr 1fr">
+      <div class="note-copy"><div class="eyebrow">Illustrative note / replace with reviewed capture</div><h2>A diagram.<br>A plan.<br><span class="accent">A next life.</span></h2><p>A study diagram becomes a review packet with an audience, a sharing plan, and suggested wording.</p><div class="quote">The payoff isn't just a saved note.<br>It's knowing what to do with it.</div><p class="small muted" style="margin-top:30px">The local walkthrough used a real, user-supplied GH-300 diagram. This public storyboard uses a generic example, not a vault screenshot.</p></div>
+      <div class="paper sample-note"><div class="source-label">Illustrative review packet / not source evidence</div><h3>Study diagram: candidate for reuse</h3><span class="pill rose">RI / draft / evidence: UNKNOWN</span><p class="small"><b>Reusable value:</b> a starting point for a study group.<br><b>Source:</b> attach the original diagram and current references.<br><b>Target:</b> wiki/outputs, after review.</p><h3>Sharing plan</h3><ol><li>Check the technical claims.</li><li>Draft a one-page handout.</li><li>Ask a peer for feedback before sharing.</li></ol><h3>Draft share copy</h3><p>"I'm preparing a study aid. Could you review the explanation before we share it with the group?"</p><p class="small muted"><b>Review question:</b> What needs correcting before reuse?</p></div>
+    </div>
+  </section>
+  <section id="s5" class="scene" data-start="51" data-duration="14" aria-label="Human validation">
+    <div class="eyebrow">The trust boundary</div><h2>AI proposes.<br><span class="accent">People validate.</span></h2>
+    <div class="gate-grid">
+      <div class="paper"><div class="step">01 / REVIEW HANDOFF</div><h3>Preserve the evidence.</h3><p class="muted">Source pointers.<br>Reusable value.<br>Confidence level.<br>Proposed destination.</p></div>
+      <div class="gate"><div class="step">02 / HUMAN REVIEW</div><div class="big">Correct?<br>Useful?<br>Safe to share?</div><p>Approval is a decision,<br>not an animation.</p></div>
+      <div class="paper"><div class="step">03 / APPROVED ASSET</div><h3>Give it a home.</h3><p class="muted">A reusable response.<br>A concept page.<br>A playbook.<br>An enablement asset.</p></div>
+    </div>
+    <p class="small muted" style="margin-top:24px">Owner approval does not automatically establish technical accuracy or permission to publish.</p>
+  </section>
+  <section id="s4" class="scene" data-start="37" data-duration="14" aria-label="Actionable handoff">
+    <div class="split">
+      <div><div class="eyebrow">Illustrative handoff / not a sent Teams message</div><h2>Less hunting.<br><span class="accent">A clear next move.</span></h2><p class="muted">Where to look. What to review.<br>What to reply. Why it matters.</p><p class="small">The handoff comes before approval.<br>The host provides delivery and permissions.</p></div>
+      <div class="paper hand"><div class="stamp">PROOF &amp; IP / SAMPLE REVIEW BRIEF</div><h3>Start with the study diagram.</h3><div class="row"><h3>LOOK HERE</h3><div class="route mono">raw/reusable-ip-candidates/<br>study-diagram.md</div></div><div class="row"><h3>REVIEW NEXT</h3><p>Check technical claims and source permissions before promoting to wiki/outputs.</p></div><div class="row"><h3>PROPOSED REPLY</h3><div class="reply">"Keep the sharing plan. Draft a corrected study handout for my review."</div></div><p class="small muted"><b>Forecast:</b> a useful starting point after review.<br><b>Weekly take (illustrative):</b> prioritize turning existing explanations into peer-reviewed aids.</p></div>
+    </div>
+  </section>
+  <section id="s6" class="scene" data-start="65" data-duration="17" aria-label="The reusable package">
+    <div class="split">
+      <div><div class="eyebrow">Repository guide / not a screen recording</div><h2>A small skill.<br><span class="accent">Not another platform.</span></h2><p>Start with the README.<br>Review the skill.<br>Adapt the templates.</p><p class="muted">Your assistant supplies M365 / WorkIQ access, storage, scheduling, and notification.</p><p class="recording-slot">Final-video capture: walk these actual files in the public repository.</p></div>
+      <div class="paper"><ul class="file-list mono">
+        <li><a href="../../README.md">README.md</a><small>Purpose, connectors, and onboarding</small></li>
+        <li><a href="../../SKILL.md">SKILL.md</a><small>CP / RI classification and review rules</small></li>
+        <li><a href="../../templates/candidate-note.md">templates/candidate-note.md</a><small>Evidence, reusable value, destination, and approval</small></li>
+        <li><a href="../../templates/weekly-handoff.md">templates/weekly-handoff.md</a><small>Where to look and what to do next</small></li>
+        <li><a href="../../scripts/Initialize-ProofIpHarvester.ps1">scripts/Initialize-ProofIpHarvester.ps1</a><small>Creates folders; does not retrieve M365 signals</small></li>
+        <li><a href="../../scripts/Test-ProofIpHarvesterPackage.ps1">scripts/Test-ProofIpHarvesterPackage.ps1</a><small>Checks package files and configuration; not connector health</small></li>
+      </ul></div>
+    </div>
+  </section>
+  <section id="s7" class="scene" data-start="82" data-duration="8" aria-label="The payoff">
+    <div class="eyebrow">A small skill. A compounding habit.</div><h1>Harvest once.<br><span class="accent">Help more people.</span></h1>
+    <div class="benefits">
+      <div class="paper"><h3>For the individual contributor</h3><p>Start the next response from something useful.<br>Spend less time reconstructing previous work.</p></div>
+      <div class="paper"><h3>For the manager</h3><p>Turn approved field examples into coaching<br>and reusable material for the team.</p></div>
+    </div>
+    <div class="repo mono">github.com/ortizjorge639/proof-ip-harvester</div>
+    <p class="small muted" style="margin-top:22px">Standalone skill + templates + setup helpers. Host connectors required.<br>Intended benefits; time savings and cross-harness operation are not yet measured.</p>
+  </section>
+  <footer class="footer"><div class="caption" id="caption"></div><div class="progress"></div><div class="footer-meta"><span>Public storyboard / illustrative screens / narration pending</span><span id="counter">01 / 07</span></div></footer>
+</div>
+<nav id="controls" aria-label="Film preview"><button id="prev">Previous</button><button id="play" aria-pressed="false">Play</button><button id="next">Next</button><button id="restart">Restart</button><input id="seek" aria-label="Video time" type="range" min="0" max="90" step="0.1" value="0"><span id="time">0:00 / 1:30</span><button id="theme">Switch theme</button></nav>
+<aside id="production">
+  <h3 id="beat-title"></h3>
+  <p><b>Draft voiceover for the final evidence-led cut:</b> <span id="voiceover"></span></p>
+  <p id="production-note"></p>
+  <p>This public storyboard contains no private captures or generated narration. Read the <a href="../hackathon-video.md">production brief</a> before recording. Arrow keys navigate beats; Space toggles playback outside controls. Add <code>?render=1</code> to hide this panel and controls for capture.</p>
+</aside>
+<script>
+const beats = [
+  {id:"s1", caption:"The next useful asset may already exist in the work you did this week.",
+    narration:"Your next useful asset may already exist in this week's work. A diagram. An explanation. A decision. Don't let the useful bits fall away.",
+    note:"Generated metaphor. The opening is not a product screen."},
+  {id:"s2", caption:"Customer Proof explains the impact. Repeatable IP helps someone else do the work.",
+    narration:"Proof and IP Harvester is a skill for turning work signals into reviewable assets. With approved Microsoft 365 and WorkIQ access, the workflow organizes Customer Proof and Repeatable IP.",
+    note:"Explain the intended workflow, not a verified autonomous run. Host connectors are required."},
+  {id:"s3", caption:"A sharing plan and draft copy give a captured artifact a next action.",
+    narration:"Here's a real, user-supplied study diagram captured in a note. The useful part is its sharing plan and draft copy: not just a place to store it, but a next step.",
+    note:"RECORDING GATE: replace the generic note with the reviewed real capture before using this voiceover. If retaining the illustration, say 'This illustrative study note shows a sharing plan and draft copy: not just a place to store an artifact, but a next step.'"},
+  {id:"s4", caption:"The review handoff arrives before the owner approves promotion.",
+    narration:"This illustrative handoff shows where to look, what needs review, and what to reply. It makes the next decision clear without pretending the review is already done.",
+    note:"Do not replace the label with 'Teams delivered' without an actual, reviewed delivery recording."},
+  {id:"s5", caption:"Owner approval, technical accuracy, and permission to publish are separate checks.",
+    narration:"AI proposes. People validate. The owner approved this example for reuse. Technical accuracy and permission to publish are separate checks, not assumptions.",
+    note:"RECORDING GATE: pair the owner-approval statement with the reviewed real output, not this generic gate graphic alone. Without that capture, say 'AI proposes. People validate. Technical accuracy, owner approval, and permission to publish are separate checks, not assumptions.'"},
+  {id:"s6", caption:"The repo provides the skill and helpers. Your assistant provides the connectors.",
+    narration:"The standalone repository includes the skill, templates, and setup helpers. Your assistant supplies the connectors. The goal is less reconstruction for individual contributors, and reusable coaching examples for managers.",
+    note:"Replace this linked file guide with real repo footage for the final cut. The PowerShell helpers do not implement signal harvesting."},
+  {id:"s7", caption:"Less reconstruction. More reuse. More room for customer work.",
+    narration:"Start with one artifact. Review it. Give it a next life. Harvest once. Help more people.",
+    note:"Benefits are intended, not measured. Keep the repository URL visible; do not read it aloud."}
+];
+const scenes = beats.map(beat => document.getElementById(beat.id));
+const duration = Number(document.getElementById("harvest").dataset.duration);
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const playButton = document.getElementById("play");
+const seekInput = document.getElementById("seek");
+let currentTime = 0, activeIndex = -1, playing = false, lastTick = null, frameRequest = null;
+const leaves = Array.from({length:12},(_,i)=>{
+  const leaf=document.createElement("i");leaf.className="leaf";leaf.setAttribute("aria-hidden","true");
+  leaf.style.left=`${30+((i*173)%670)}px`;leaf.style.top=`${35+((i*139)%610)}px`;
+  document.querySelector(".art").prepend(leaf);return leaf;
+});
+const formatTime = t => `${Math.floor(t/60)}:${String(Math.floor(t%60)).padStart(2,"0")}`;
+function draw(time) {
+  if(!Number.isFinite(time)) throw new TypeError("Frame time must be a finite number.");
+  currentTime=Math.max(0,Math.min(duration,time));
+  const index=scenes.findIndex(scene => currentTime < Number(scene.dataset.start)+Number(scene.dataset.duration));
+  const selected=index<0 ? scenes.length-1 : index;
+  scenes.forEach((scene,i)=>{
+    const visible=i===selected;
+    const elapsed=currentTime-Number(scene.dataset.start);
+    const entrance=reducedMotion.matches ? 1 : Math.min(1,Math.max(0,elapsed/.55));
+    scene.style.opacity=visible ? .4+.6*entrance : 0;
+    scene.style.transform=`translateY(${visible?(1-entrance)*16:0}px)`;
+    scene.setAttribute("aria-hidden",String(!visible));
+    scene.inert=!visible;
+  });
+  leaves.forEach((leaf,i)=>{leaf.style.transform=`translateY(${reducedMotion.matches?0:Math.sin(currentTime*.3+i)*30}px) rotate(${i*29+currentTime*6}deg)`;});
+  if(activeIndex!==selected){
+    activeIndex=selected;
+    document.getElementById("caption").textContent=beats[selected].caption;
+    document.getElementById("voiceover").textContent=beats[selected].narration;
+    document.getElementById("production-note").textContent=beats[selected].note;
+    document.getElementById("beat-title").textContent=`Beat ${selected+1}: ${scenes[selected].getAttribute("aria-label")}`;
+    document.getElementById("counter").textContent=`0${selected+1} / 07`;
+  }
+  seekInput.value=currentTime;
+  document.getElementById("time").textContent=`${formatTime(currentTime)} / ${formatTime(duration)}`;
+  document.querySelector(".progress").style.transform=`scaleX(${currentTime/duration})`;
+}
+function pause(){
+  playing=false;lastTick=null;
+  if(frameRequest!==null)cancelAnimationFrame(frameRequest);
+  frameRequest=null;playButton.textContent="Play";playButton.setAttribute("aria-pressed","false");
+}
+function tick(timestamp){
+  if(!playing)return;
+  const delta=lastTick===null?0:(timestamp-lastTick)/1000;
+  lastTick=timestamp;draw(currentTime+delta);
+  if(currentTime>=duration){pause();return;}
+  frameRequest=requestAnimationFrame(tick);
+}
+function play(){
+  if(playing)return;
+  if(currentTime>=duration)draw(0);
+  playing=true;lastTick=null;playButton.textContent="Pause";playButton.setAttribute("aria-pressed","true");
+  frameRequest=requestAnimationFrame(tick);
+}
+function navigate(offset){pause();draw(Number(scenes[Math.max(0,Math.min(scenes.length-1,activeIndex+offset))].dataset.start));}
+// Deterministic capture hook: pause live playback and seek to any requested frame.
+window.showFrame=time=>{pause();draw(time);};
+playButton.addEventListener("click",()=>playing?pause():play());
+document.getElementById("prev").addEventListener("click",()=>navigate(-1));
+document.getElementById("next").addEventListener("click",()=>navigate(1));
+document.getElementById("restart").addEventListener("click",()=>{pause();draw(0);play();});
+seekInput.addEventListener("input",e=>window.showFrame(Number(e.target.value)));
+document.getElementById("theme").addEventListener("click",()=>{document.documentElement.dataset.theme=document.documentElement.dataset.theme==="dark"?"light":"dark";});
+document.addEventListener("keydown",e=>{
+  if(e.target.closest("input,button,a,textarea,select")||e.altKey||e.ctrlKey||e.metaKey)return;
+  if(e.key==="ArrowRight"){e.preventDefault();navigate(1);}
+  if(e.key==="ArrowLeft"){e.preventDefault();navigate(-1);}
+  if(e.code==="Space"){e.preventDefault();playing?pause():play();}
+});
+document.addEventListener("visibilitychange",()=>{if(document.hidden)pause();});
+if(new URLSearchParams(location.search).has("render")) document.body.classList.add("render");
+function fitPreview(){
+  const s=Math.min(1,window.innerWidth/1920),root=document.querySelector("#harvest");
+  document.body.style.width=`${1920*s}px`;
+  root.style.transformOrigin="top left";
+  root.style.transform=`scale(${s})`;
+  root.style.marginBottom=`${1080*(s-1)}px`;
+}
+window.addEventListener("resize",fitPreview);
+fitPreview();
+draw(0);
+</script>
+</body>
+</html>

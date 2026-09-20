@@ -7,6 +7,20 @@
 **Core message:** Harvest the work you already did.  
 **Closing line:** Harvest once. Help more people.
 
+## Review the slides
+
+Open [the seven-beat HTML storyboard](slides/index.html) after cloning or downloading the repository. It runs locally without a server, package installation, or network access. GitHub's file view shows HTML source; download it or open your local clone to play it.
+
+The storyboard is a **90-second silent editorial preview**, not a final video. It retains the autumn visual style, gives the note 17 seconds, places the handoff before human approval, and adds a linked repository walkthrough. All public note and handoff screens are explicitly illustrative. Private vault screenshots and generated narration are not included.
+
+- Use Play, Previous, Next, Restart, or the time slider. Arrow keys move between beats; Space toggles playback outside form controls.
+- Read the draft voiceover and recording gate below each slide. Real-example narration requires the corresponding reviewed capture; an illustrative alternative is provided where needed.
+- Append `?scoutTheme=light` or `?scoutTheme=dark` to select a theme. Add `&render=1` to hide controls and production notes for screen capture.
+- For deterministic browser screenshots, call `window.showFrame(seconds)`. Beat boundaries are `0, 8, 20, 37, 51, 65, 82`, ending at `90`.
+- Timing is defined by each section's `data-start` and `data-duration`. Update those values, the root duration, and slider maximum together after the approved narration is available.
+
+This portable version uses inline browser JavaScript, not GSAP. It is **not a drop-in HyperFrames composition**: use browser capture, or port the approved timing to a registered HyperFrames/GSAP timeline for MP4 rendering. The earlier local HyperFrames composition and 60-second movie remain unchanged.
+
 ## Purpose and audience
 
 Show how useful work can become reusable material instead of disappearing into chats, email, and files. The viewer should understand the problem, see a real review artifact, and know how to try the standalone skill.
@@ -96,8 +110,8 @@ Times are editorial targets. After narration is recorded, adjust the timeline to
 | 1. The lost value | 0-8s | Paper fragments drift around the project title | "Don't let the useful bits fall away." | Generated metaphor, not an application screen |
 | 2. Two lanes | 8-20s | Show approved sources feeding CP and RI, then a candidate inbox | One workflow preserves evidence and reusable know-how | Label as workflow concept; the host supplies connectors |
 | 3. The real artifact | 20-37s | Open the actual Obsidian example; focus on sharing plan and draft copy | A saved diagram now has a useful next action | Real capture; user-supplied example, not autonomous discovery |
-| 4. Human validation | 37-51s | Show the current output path and a restrained review-gate overlay | AI proposes; people validate | Current approved state is real; any historical transition must be labeled a reenactment |
-| 5. Actionable handoff | 51-65s | Show where to look, what to review, a proposed reply, and a forecast | Remove the hunt and make review easy | Use the illustrative brief until a real delivered notification is verified |
+| 4. Actionable handoff | 37-51s | Show where to look, what to review, a proposed reply, and a forecast | Remove the hunt and make review easy; handoff precedes approval | Use the illustrative brief until a real delivered notification is verified |
+| 5. Human validation | 51-65s | Show the current output path and a restrained review-gate overlay | AI proposes; people validate | Current approved state is real; any historical transition must be labeled a reenactment |
 | 6. The reusable package | 65-82s | Walk the public README, skill, candidate template, and helper files | It is a portable skill package with host dependencies | Real repo footage; avoid implying helpers perform M365 retrieval |
 | 7. The payoff | 82-90s | Clean close with IC/M1 benefit and repository URL | "Harvest once. Help more people." | Intended benefits, not measured savings |
 
@@ -133,11 +147,11 @@ The blocks below are the proposed spoken copy, not final approved ElevenLabs inp
 
 ### Beat 4
 
-> AI proposes. People validate. The owner approved this example for reuse. Technical accuracy and permission to publish are separate checks, not assumptions.
+> This illustrative handoff shows where to look, what needs review, and what to reply. It makes the next decision clear without pretending the review is already done.
 
 ### Beat 5
 
-> This illustrative handoff shows where to look, what needs review, and what to reply. It makes the next decision clear without pretending the review is already done.
+> AI proposes. People validate. The owner approved this example for reuse. Technical accuracy and permission to publish are separate checks, not assumptions.
 
 ### Beat 6
 
@@ -148,6 +162,8 @@ The blocks below are the proposed spoken copy, not final approved ElevenLabs inp
 > Start with one artifact. Review it. Give it a next life. Harvest once. Help more people.
 
 This draft is approximately 200 words. At roughly 140-155 words per minute plus pauses, it should fit a 90-second cut. Measure the generated audio rather than assuming the duration.
+
+If the public illustrative slides are retained instead of real captures, replace Beat 3 with: "This illustrative study note shows a sharing plan and draft copy: not just a place to store an artifact, but a next step." Replace Beat 5 with: "AI proposes. People validate. Technical accuracy, owner approval, and permission to publish are separate checks, not assumptions." Do not narrate a real capture while showing an unlabeled reconstruction.
 
 ## ElevenLabs narration handoff
 
@@ -206,8 +222,8 @@ For a public repository asset or external generation service, approval to captur
 1. Freeze the story and spoken script in this document. Record any revised evidence status.
 2. Generate and approve the narration. Record each beat's actual start and end time.
 3. Capture the real screens and crop unrelated information. Keep originals private; use only reviewed derivatives in the edit.
-4. Refine the existing `index.html` or build a new slideshow from the beat table. Add the repo walkthrough and extend the real-note segment rather than stretching the six original scenes mechanically.
-5. Register a paused GSAP timeline with HyperFrames. Use deterministic animation; avoid random or wall-clock-driven motion. Keep text and evidence labels readable throughout each relevant shot.
+4. Refine `docs/slides/index.html` or the earlier local composition from the beat table. The public version now includes the repo walkthrough and longer note segment; replace its labeled illustrative screens with approved real captures for the evidence-led cut.
+5. For HyperFrames, port the timing to a registered paused GSAP timeline. For browser capture, seek the public slideshow with `window.showFrame(seconds)`. Use deterministic animation; avoid random or wall-clock-driven capture. Keep text and evidence labels readable throughout each relevant shot.
 6. Add the narration using the renderer's supported audio track, or mux a duration-matched WAV with FFmpeg. Do not accidentally cut off narration with a shortest-input export.
 7. Add captions based on the final recording. Separate spoken captions from disclosure labels such as "Illustrative handoff."
 8. Render locally and review the exported file, including transitions, captions, legibility, and audio. Inspect beginning, end, and the joins around every beat.

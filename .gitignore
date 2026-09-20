@@ -1,0 +1,6 @@
+# Local configuration and private production media do not belong in the public package.
+/config.json
+/output/
+/docs/slides/private/
+/docs/slides/renders/
+/docs/slides/audio/
