@@ -1,0 +1,131 @@
+1
+00:00:00,040 --> 00:00:02,785
+Most weeks leave useful work scattered
+across chats and
+
+2
+00:00:02,733 --> 00:00:06,280
+files: an explanation, a decision, a
+diagram that could
+
+3
+00:00:06,205 --> 00:00:09,972
+help again. Proof and IP Harvester is a
+standalone
+
+4
+00:00:09,908 --> 00:00:13,443
+skill for organizing approved work signals
+into Customer Proof,
+
+5
+00:00:13,612 --> 00:00:16,717
+what changed for a customer, and
+Repeatable IP,
+
+6
+00:00:16,816 --> 00:00:18,749
+what someone else can reuse.
+
+7
+00:00:18,964 --> 00:00:22,928
+Microsoft 365 and WorkIQ access come from
+the host.
+
+8
+00:00:23,202 --> 00:00:26,853
+A real, user-supplied study diagram
+reached an approved note.
+
+9
+00:00:27,068 --> 00:00:29,941
+This illustrative review packet shows the
+next step:
+
+10
+00:00:30,005 --> 00:00:32,100
+add a sharing plan and draft copy,
+
+11
+00:00:32,164 --> 00:00:34,167
+so someone knows what to do next.
+
+12
+00:00:34,382 --> 00:00:35,943
+This handoff is illustrative.
+
+13
+00:00:36,042 --> 00:00:37,743
+It points the owner to the source,
+
+14
+00:00:37,877 --> 00:00:41,237
+separates evidence from forecasts, and
+proposes a reply.
+
+15
+00:00:41,510 --> 00:00:44,001
+It makes review easier; it does not claim
+a
+
+16
+00:00:43,949 --> 00:00:45,452
+Teams message was sent.
+
+17
+00:00:45,725 --> 00:00:47,252
+Then a person decides.
+
+18
+00:00:47,525 --> 00:00:50,073
+The owner approved this example for reuse.
+
+19
+00:00:50,474 --> 00:00:53,382
+That approval does not prove every
+technical claim or
+
+20
+00:00:53,341 --> 00:00:54,891
+grant permission to publish.
+
+21
+00:00:55,222 --> 00:00:59,349
+Accuracy, reuse, and sharing stay separate
+decisions.
+
+22
+00:00:59,622 --> 00:01:02,902
+The public repo includes the skill,
+templates,
+
+23
+00:01:02,861 --> 00:01:05,061
+a setup helper, and package checks.
+
+24
+00:01:05,462 --> 00:01:08,300
+It still needs a compatible host for
+connectors,
+
+25
+00:01:08,399 --> 00:01:11,156
+storage, scheduling, and notifications.
+
+26
+00:01:11,650 --> 00:01:15,348
+The helpers do not retrieve Microsoft 365
+data.
+
+27
+00:01:15,563 --> 00:01:16,985
+The payoff is illustrative.
+
+28
+00:01:17,084 --> 00:01:20,572
+The intended benefit: less reconstruction,
+more approved work to
+
+29
+00:01:20,544 --> 00:01:23,463
+reuse. Harvest once. Help more people.
