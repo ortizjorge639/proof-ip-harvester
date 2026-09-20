@@ -145,9 +145,14 @@ The harvester should keep evidence pointers local, write candidate notes as draf
 
 ## Repository contents
 
-For the demo story, timed beats, narration draft, and production requirements, see [Hackathon demo video](docs/hackathon-video.md).
+For the demo story, timed beats, narration script, and production requirements, see [Hackathon demo video](docs/hackathon-video.md).
 
-The [90-second HTML storyboard](docs/slides/index.html) opens locally without dependencies. It includes playback controls, seven demo beats, and draft speaker notes. Public examples are labeled illustrative; private captures and narration are not bundled.
+The repository includes two presentation layers:
+
+- The original [90-second HTML storyboard](docs/slides/index.html), retained as the portable baseline.
+- The complete [refined 88-second demo package](docs/demo/README.md), including the premium editorial HTML presentation, deterministic captions, sanitized evidence assets, River narration, QA contact sheet, and final full-quality/mobile MP4 encodes.
+
+Real captures and illustrative reconstructions are labeled explicitly in the refined presentation.
 
 ```text
 proof-ip-harvester/
@@ -155,6 +160,15 @@ proof-ip-harvester/
   SKILL.md
   config.example.json
   docs/
+    demo/
+      README.md
+      production/
+      final/
+      review/
+      river-narration.m4a
+      proof-ip-harvester.srt
+      design-system.json
+    final-video-script.md
     hackathon-video.md
     slides/
       index.html
